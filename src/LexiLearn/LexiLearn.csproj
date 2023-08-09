@@ -16,6 +16,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LexiLearn.DAL\LexiLearn.DAL.csproj" />
+    <ProjectReference Include="..\LexiLearn.Domain\LexiLearn.Domain.csproj" />
+    <ProjectReference Include="..\LexiLearn.Service\LexiLearn.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\UserView\" />
   </ItemGroup>
 
 </Project>
