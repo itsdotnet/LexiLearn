@@ -20,7 +20,8 @@ LexiLearn is a language learning application designed to help you expand your vo
 1. Clone the repository: `git clone https://github.com/IskandarKodirov/LexiLearn.git`
 2. Open folder then open solution file
 3. Open NugetPackage Manager Console and write : `Update-Database`
-4. Run project or run with published `LexiLearn.exe`
+4. Don't forget to set `LexiLearn` as Startup project
+5. Run project or run with published `LexiLearn.exe`
 
 ## Database 
 
