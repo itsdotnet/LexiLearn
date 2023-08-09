@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LexiLearn", "LexiLearn\LexiLearn.csproj", "{541A1068-A6BD-42D9-B135-4E902887B387}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{541A1068-A6BD-42D9-B135-4E902887B387}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{541A1068-A6BD-42D9-B135-4E902887B387}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{541A1068-A6BD-42D9-B135-4E902887B387}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{541A1068-A6BD-42D9-B135-4E902887B387}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6E4E696-54C6-48C2-846C-1CF1E8ACB7AB}
+	EndGlobalSection
+EndGlobal
