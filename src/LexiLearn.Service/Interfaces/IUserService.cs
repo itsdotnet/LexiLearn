@@ -10,7 +10,7 @@ namespace LexiLearn.Domain.Services
 
         Task<Response<UserResultDto>> UpdateAsync(UserUpdateDto dto);
 
-        Task<Response<bool>> ChangePassword(long id, string newPass);
+        Task<Response<bool>> ChangePassword(long id, string  oldPass, string newPass);
 
         Task<Response<bool>> DeleteAsync(long id);
 
