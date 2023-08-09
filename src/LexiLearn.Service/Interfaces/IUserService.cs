@@ -1,6 +1,21 @@
-﻿namespace LexiLearn.Service.Interfaces;
+﻿using LexiLearn.Domain.Entity.User;
+using LexiLearn.Service.DTOs.Users;
+using LexiLearn.Service.Helpers;
 
-public interface IUserService
+namespace LexiLearn.Domain.Services
 {
+    public interface IUserService
+    {
+        Task<Response<UserResultDto>> CreateAsync(UserCreationDto dto);
 
+        Task<Response<UserResultDto>> UpdateAsync(UserUpdateDto dto);
+
+        Task<Response<bool>> ChangePassword(long id, string newPass);
+
+        Task<Response<bool>> DeleteAsync(long id);
+
+        Task<Response<User>> GetByIdAsync(long id);
+
+        Task<Response<IEnumerable<User>>> GetAllAsync();
+    }
 }
