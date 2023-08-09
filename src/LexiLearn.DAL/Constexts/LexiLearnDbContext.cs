@@ -14,6 +14,8 @@ public class LexiLearnDbContext : DbContext
 
     public DbSet<Quiz> Quizzes { get; set; }
 
+    public DbSet<QuizHistory> QuizHistory { get; set; }
+
     public DbSet<Word> Words { get; set; }
 
     public DbSet<Question> Questions { get; set; }

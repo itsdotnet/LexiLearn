@@ -19,4 +19,6 @@ public class User : Auditable
     public bool IsEmailVerifed { get; set; }
 
     public string Password { get; set; }
+
+    public long Score { get; set; }
 }

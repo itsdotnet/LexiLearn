@@ -40,6 +40,7 @@ namespace LexiLearn.DAL.Migrations
                     Email = table.Column<string>(type: "text", nullable: true),
                     IsEmailVerifed = table.Column<bool>(type: "boolean", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: true),
+                    Score = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -116,6 +117,35 @@ namespace LexiLearn.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "QuizHistory",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    QuizId = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    Score = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuizHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_QuizHistory_Quizzes_QuizId",
+                        column: x => x.QuizId,
+                        principalTable: "Quizzes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuizHistory_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Questions",
                 columns: table => new
                 {
@@ -143,6 +173,16 @@ namespace LexiLearn.DAL.Migrations
                 column: "WordId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_QuizHistory_QuizId",
+                table: "QuizHistory",
+                column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuizHistory_UserId",
+                table: "QuizHistory",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Quizzes_CategoryId",
                 table: "Quizzes",
                 column: "CategoryId");
@@ -160,19 +200,22 @@ namespace LexiLearn.DAL.Migrations
                 name: "Questions");
 
             migrationBuilder.DropTable(
+                name: "QuizHistory");
+
+            migrationBuilder.DropTable(
+                name: "Words");
+
+            migrationBuilder.DropTable(
                 name: "Quizzes");
 
             migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Words");
+                name: "WordCategories");
 
             migrationBuilder.DropTable(
                 name: "QuizCategories");
-
-            migrationBuilder.DropTable(
-                name: "WordCategories");
         }
     }
 }

@@ -135,6 +135,38 @@ namespace LexiLearn.DAL.Migrations
                     b.ToTable("Quizzes");
                 });
 
+            modelBuilder.Entity("LexiLearn.Domain.Entities.Quizzes.QuizHistory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("QuizId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Score")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("QuizHistory");
+                });
+
             modelBuilder.Entity("LexiLearn.Domain.Entities.Words.Word", b =>
                 {
                     b.Property<long>("Id")
@@ -202,6 +234,9 @@ namespace LexiLearn.DAL.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
+                    b.Property<long>("Score")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -234,6 +269,25 @@ namespace LexiLearn.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("LexiLearn.Domain.Entities.Quizzes.QuizHistory", b =>
+                {
+                    b.HasOne("LexiLearn.Domain.Entities.Quizzes.Quiz", "Quiz")
+                        .WithMany()
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LexiLearn.Domain.Entity.User.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quiz");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LexiLearn.Domain.Entities.Words.Word", b =>
