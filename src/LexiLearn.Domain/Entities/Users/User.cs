@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LexiLearn.Domain.Entity.User;
 
-public class UserEntity : Auditable
+public class User : Auditable
 {
     [MaxLength(25), MinLength(2)]
     public string FirstName { get; set; }
