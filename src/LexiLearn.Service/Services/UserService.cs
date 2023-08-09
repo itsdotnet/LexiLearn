@@ -32,6 +32,7 @@ public class UserService : IUserService
         if (passStatus)
         {
             user.Password = newPass;
+            unitOfWork.UserRepository.SaveChanges();
 
             return new Response<bool>
             {
@@ -84,6 +85,7 @@ public class UserService : IUserService
         dto.Password = dto.Password.Hasher();
 
         unitOfWork.UserRepository.Add(mapper.Map<User>(dto));
+        unitOfWork.UserRepository.SaveChanges();
 
         return new Response<UserResultDto>
         {
@@ -106,6 +108,7 @@ public class UserService : IUserService
             };
 
         unitOfWork.UserRepository.Delete(user);
+        unitOfWork.UserRepository.SaveChanges();
 
         return new Response<bool>
         {
@@ -213,6 +216,7 @@ public class UserService : IUserService
         exsistUser = mapper.Map<User>(dto);
 
         unitOfWork.UserRepository.Update(exsistUser);
+        unitOfWork.UserRepository.SaveChanges();
 
         return new Response<UserResultDto>
         {
