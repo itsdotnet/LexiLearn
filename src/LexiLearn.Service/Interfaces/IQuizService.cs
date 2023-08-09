@@ -22,4 +22,6 @@ public interface IQuizService
     Task<Response<IEnumerable<Quiz>>> SearchQuizzesAsync(string searchTerm);
 
     Task<Response<IEnumerable<Quiz>>> GetQuizzesByLevelAsync(QuizLevel level);
+
+    Task<Response<bool>> IsValidCategoryId(long categoryId);
 }

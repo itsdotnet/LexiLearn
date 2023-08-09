@@ -26,6 +26,14 @@ public class QuizService : IQuizService
 
     public async Task<Response<QuizResultDto>> CreateAsync(QuizCreationDto dto)
     {
+        if((await IsValidCategoryId(dto.CategoryId)).Data)
+            return new Response<QuizResultDto>()
+            {
+                StatusCode = 400,
+                Message = "Category ID invalid",
+                Data = null
+            };
+
         var newQuiz = mapper.Map<Quiz>(dto);
 
         unitOfWork.QuizRepository.Add(newQuiz);
@@ -43,6 +51,14 @@ public class QuizService : IQuizService
 
     public async Task<Response<QuizResultDto>> UpdateAsync(QuizUpdateDto dto)
     {
+        if ((await IsValidCategoryId(dto.CategoryId)).Data)
+            return new Response<QuizResultDto>()
+            {
+                StatusCode = 400,
+                Message = "Category ID invalid",
+                Data = null
+            };
+
         var existingQuiz = unitOfWork.QuizRepository.Select(dto.Id);
 
         if (existingQuiz is null)
@@ -205,6 +221,26 @@ public class QuizService : IQuizService
             StatusCode = 200,
             Message = "Quizzes for the specified level returned",
             Data = quizzesByLevel
+        };
+    }
+
+    public async Task<Response<bool>> IsValidCategoryId(long categoryId)
+    {
+        var category = unitOfWork.QuizCategoryRepository.Select(categoryId);
+
+        if (category is null)
+            return new Response<bool>
+            {
+                StatusCode = 404,
+                Message = "Category not found",
+                Data = false
+            };
+
+        return new Response<bool>
+        {
+            StatusCode = 200,
+            Message = "Category is exsist",
+            Data = true
         };
     }
 }

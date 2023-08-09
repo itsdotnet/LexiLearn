@@ -26,6 +26,15 @@ public class QuizHistoryService : IQuizHistoryService
 
     public async Task<Response<QuizHistoryResultDto>> CreateAsync(QuizHistoryCreationDto dto)
     {
+        var response = await IsValidId(dto.UserId, dto.QuizId);
+        if (response.Data)
+            return new Response<QuizHistoryResultDto>
+            {
+                StatusCode = 200,
+                Message = "User ID or Quiz ID invalid",
+                Data = null
+            };
+
         var newQuizHistory = mapper.Map<QuizHistory>(dto);
 
         unitOfWork.QuizHistoryRepository.Add(newQuizHistory);
@@ -73,14 +82,12 @@ public class QuizHistoryService : IQuizHistoryService
         var existingQuizHistory = unitOfWork.QuizHistoryRepository.Select(id);
 
         if (existingQuizHistory is null)
-        {
             return new Response<bool>
             {
                 StatusCode = 404,
                 Message = "Quiz history not found",
                 Data = false
             };
-        }
 
         unitOfWork.QuizHistoryRepository.Delete(existingQuizHistory);
         unitOfWork.QuizHistoryRepository.SaveChanges();
@@ -98,14 +105,12 @@ public class QuizHistoryService : IQuizHistoryService
         var quizHistory = unitOfWork.QuizHistoryRepository.Select(id);
 
         if (quizHistory is null)
-        {
             return new Response<QuizHistory>
             {
                 StatusCode = 404,
                 Message = "Quiz history not found",
                 Data = null
             };
-        }
 
         return new Response<QuizHistory>
         {
@@ -115,4 +120,24 @@ public class QuizHistoryService : IQuizHistoryService
         };
     }
 
+    public async Task<Response<bool>> IsValidId(long userId, long quizId)
+    {
+        var user = unitOfWork.UserRepository.Select(userId);
+        var quiz = unitOfWork.QuizRepository.Select(quizId);
+
+        if (user is null || quiz is null)
+            return new Response<bool>
+            {
+                StatusCode = 404,
+                Message = "Quiz or User not found",
+                Data = false
+            };
+
+        return new Response<bool>
+        {
+            StatusCode = 200,
+            Message = "Quiz and User exsist",
+            Data = true
+        };
+    }
 }

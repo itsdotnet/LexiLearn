@@ -2,6 +2,7 @@
 using LexiLearn.DAL.IRepositories;
 using LexiLearn.DAL.Repository;
 using LexiLearn.Domain.Entities.Words;
+using LexiLearn.Service.DTOs.Quizzes;
 using LexiLearn.Service.DTOs.Words;
 using LexiLearn.Service.Helpers;
 using LexiLearn.Service.Interfaces;
@@ -25,6 +26,14 @@ public class WordService : IWordService
 
     public async Task<Response<WordResultDto>> CreateAsync(WordCreationDto dto)
     {
+        if ((await IsValidCategoryId(dto.CategoryId)).Data)
+            return new Response<WordResultDto>()
+            {
+                StatusCode = 400,
+                Message = "Category ID invalid",
+                Data = null
+            };
+
         var newWord = mapper.Map<Word>(dto);
         unitOfWork.WordRepository.Add(newWord);
 
@@ -43,6 +52,14 @@ public class WordService : IWordService
 
     public async Task<Response<WordResultDto>> UpdateAsync(WordUpdateDto dto)
     {
+        if ((await IsValidCategoryId(dto.CategoryId)).Data)
+            return new Response<WordResultDto>()
+            {
+                StatusCode = 400,
+                Message = "Category ID invalid",
+                Data = null
+            };
+
         var existingWord = unitOfWork.WordRepository.Select(dto.Id);
 
         if (existingWord is null)
@@ -184,6 +201,26 @@ public class WordService : IWordService
             StatusCode = 200,
             Message = "Words matching the search term returned",
             Data = searchedWords
+        };
+    }
+
+    public async Task<Response<bool>> IsValidCategoryId(long categoryId)
+    {
+        var category = unitOfWork.QuizCategoryRepository.Select(categoryId);
+
+        if (category is null)
+            return new Response<bool>
+            {
+                StatusCode = 404,
+                Message = "Category not found",
+                Data = false
+            };
+
+        return new Response<bool>
+        {
+            StatusCode = 200,
+            Message = "Category is exsist",
+            Data = true
         };
     }
 }

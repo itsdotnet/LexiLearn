@@ -15,4 +15,6 @@ public interface IQuizHistoryService
     Task<Response<bool>> DeleteAsync(long id);
 
     Task<Response<QuizHistory>> GetByIdAsync(long id);
+
+    Task<Response<bool>> IsValidId(long userId, long quizId);
 }
