@@ -1,7 +1,9 @@
-﻿namespace LexiLearn.Service.DTOs;
+﻿namespace LexiLearn.Service.DTOs.Users;
 
-public class UserCreationDto
+public class UserResultDto
 {
+    public long Id { get; set; }
+
     public string FirstName { get; set; }
 
     public string LastName { get; set; }

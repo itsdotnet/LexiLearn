@@ -1,4 +1,4 @@
-﻿namespace LexiLearn.Service.DTOs;
+﻿namespace LexiLearn.Service.DTOs.Users;
 
 public class UserUpdateDto
 {
