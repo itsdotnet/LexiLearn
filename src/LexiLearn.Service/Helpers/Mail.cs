@@ -7,9 +7,10 @@ namespace LexiLearn.Service.Helpers;
 public class Mail
 {
     private SmtpClient _smtp = new SmtpClient();
+
     public Mail()
     {
-        Connect();    
+        Connect();
     }
 
     public async Task Connect()
@@ -40,7 +41,8 @@ public class Mail
         mail.Subject = "Verfy Your Account";
         mail.Body = new TextPart()
         {
-            Text = $"Your verfication code is {codeForVerfy}"
+            Text = "This email from LexiLearn\n" +
+                $"Your verfication code is {codeForVerfy}"
         };
 
         //send message
