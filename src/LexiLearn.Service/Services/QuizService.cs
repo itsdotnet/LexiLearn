@@ -27,14 +27,15 @@ public class QuizService : IQuizService
     public async Task<Response<QuizResultDto>> CreateAsync(QuizCreationDto dto)
     {
         var newQuiz = mapper.Map<Quiz>(dto);
+
         unitOfWork.QuizRepository.Add(newQuiz);
-        await unitOfWork.SaveAsync();
+        unitOfWork.QuizRepository.SaveChanges();
 
         var resultDto = mapper.Map<QuizResultDto>(newQuiz);
 
         return new Response<QuizResultDto>
         {
-            StatusCode = 201,
+            StatusCode = 200,
             Message = "Quiz created",
             Data = resultDto
         };
@@ -43,7 +44,8 @@ public class QuizService : IQuizService
     public async Task<Response<QuizResultDto>> UpdateAsync(QuizUpdateDto dto)
     {
         var existingQuiz = unitOfWork.QuizRepository.Select(dto.Id);
-        if (existingQuiz == null)
+
+        if (existingQuiz is null)
         {
             return new Response<QuizResultDto>
             {
@@ -53,10 +55,10 @@ public class QuizService : IQuizService
             };
         }
 
-        mapper.Map(dto, existingQuiz);
+        existingQuiz = mapper.Map<Quiz>(dto);
 
         unitOfWork.QuizRepository.Update(existingQuiz);
-        await unitOfWork.SaveAsync();
+        unitOfWork.QuizRepository.SaveChanges();
 
         var resultDto = mapper.Map<QuizResultDto>(existingQuiz);
 
@@ -71,7 +73,8 @@ public class QuizService : IQuizService
     public async Task<Response<bool>> DeleteAsync(long id)
     {
         var existingQuiz = unitOfWork.QuizRepository.Select(id);
-        if (existingQuiz == null)
+
+        if (existingQuiz is null)
         {
             return new Response<bool>
             {
@@ -82,7 +85,7 @@ public class QuizService : IQuizService
         }
 
         unitOfWork.QuizRepository.Delete(existingQuiz);
-        await unitOfWork.SaveAsync();
+        unitOfWork.QuizRepository.SaveChanges();
 
         return new Response<bool>
         {
@@ -96,7 +99,7 @@ public class QuizService : IQuizService
     {
         var quiz = unitOfWork.QuizRepository.Select(id);
 
-        if (quiz == null)
+        if (quiz is null)
         {
             return new Response<Quiz>
             {
@@ -118,7 +121,7 @@ public class QuizService : IQuizService
     {
         var allQuizzes = unitOfWork.QuizRepository.SelectAll();
 
-        if (allQuizzes == null)
+        if (allQuizzes is null)
         {
             return new Response<IEnumerable<Quiz>>
             {
@@ -141,7 +144,7 @@ public class QuizService : IQuizService
         var quizzesInCategory = unitOfWork.QuizRepository.SelectAll()
             .Where(q => q.CategoryId == categoryId);
 
-        if (quizzesInCategory == null || !quizzesInCategory.Any())
+        if (quizzesInCategory is null)
         {
             return new Response<IEnumerable<Quiz>>
             {
@@ -161,10 +164,10 @@ public class QuizService : IQuizService
 
     public async Task<Response<IEnumerable<Quiz>>> SearchQuizzesAsync(string searchTerm)
     {
-        var searchedQuizzes = unitOfWork.QuizRepository.SelectAll().Where(
-            q => q.Title.StartsWith(searchTerm.ToLower().Trim()));
+        var searchedQuizzes = unitOfWork.QuizRepository.SelectAll()
+            .Where(q => q.Title.StartsWith(searchTerm.ToLower().Trim()));
 
-        if (searchedQuizzes == null)
+        if (searchedQuizzes is null)
         {
             return new Response<IEnumerable<Quiz>>
             {
@@ -187,7 +190,7 @@ public class QuizService : IQuizService
         var quizzesByLevel = unitOfWork.QuizRepository.SelectAll()
             .Where(q => q.Level == level);
 
-        if (quizzesByLevel == null || !quizzesByLevel.Any())
+        if (quizzesByLevel is null)
         {
             return new Response<IEnumerable<Quiz>>
             {

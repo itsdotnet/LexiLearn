@@ -20,7 +20,4 @@ public interface IWordService
     Task<Response<IEnumerable<Word>>> GetWordsByCategoryAsync(long categoryId);
 
     Task<Response<IEnumerable<Word>>> SearchWordsAsync(string searchTerm);
-
-    Task<Response<IEnumerable<Word>>> GetWordsByLevelAsync(WordLevel level);
-
 }
