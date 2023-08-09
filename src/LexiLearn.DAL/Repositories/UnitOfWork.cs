@@ -10,13 +10,18 @@ namespace LexiLearn.DAL.Repository;
 
 public class UnitOfWork : IUnitOfWork
 {
-
     private readonly LexiLearnDbContext dbContext;
 
     public UnitOfWork()
     {
         this.dbContext = new LexiLearnDbContext();
-
+        UserRepository = new Repository<User>(dbContext);
+        WordRepository = new Repository<Word>(dbContext);
+        QuizRepository = new Repository<Quiz>(dbContext);
+        QuizHistoryRepository = new Repository<QuizHistory>(dbContext);
+        QuestionRepository = new Repository<Question>(dbContext);
+        WordCategoryRepository = new Repository<WordCategory>(dbContext);
+        QuizCategoryRepository = new Repository<QuizCategory>(dbContext);
     }
 
     public IRepository<User> UserRepository { get; }
