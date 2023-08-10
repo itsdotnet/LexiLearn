@@ -28,6 +28,13 @@ public class UserService : IUserService
     {
         var user = unitOfWork.UserRepository.Select(id);
         var passStatus = (await CheckPassword(id, oldPass)).Data;
+        if(user is null)
+            return new Response<bool>
+            {
+                StatusCode = 404,
+                Message = "User is null",
+                Data = false
+            };
 
         if (passStatus)
         {

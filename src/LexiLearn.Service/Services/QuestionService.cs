@@ -211,8 +211,7 @@ public class QuestionService : IQuestionService
 
     public async Task<string> PrintQuestionAsync(long id)
     {
-        var question = unitOfWork.QuestionRepository.SelectAll().Include(q => q.Word)
-            .FirstOrDefault(q => q.Id == id);
+        var question = unitOfWork.QuestionRepository.Select(id);
 
         if (question is null)
             return "";
@@ -221,8 +220,10 @@ public class QuestionService : IQuestionService
             Console.Write($"Translate {question.Word.Text} to Uzbek language: ");
         else
             Console.Write($"{question.Word.Text} so'zini ingliz tiliga tarjima qiling: ");
+
         return question.Word.Translation;
     }
+
 
     public async Task<Response<bool>> CheckAsync(long id, string answer)
     {
@@ -255,7 +256,7 @@ public class QuestionService : IQuestionService
 
     public async Task<Response<IEnumerable<Question>>> GetQuestionsByQuizIdAsync(long quizId)
     {
-        var questionsForQuiz = unitOfWork.QuestionRepository.SelectAll()
+        var questionsForQuiz = unitOfWork.QuestionRepository.SelectAll().AsNoTracking()
             .Where(q => q.QuizId == quizId).Include(w => w.Quiz);
 
         if (questionsForQuiz is null)

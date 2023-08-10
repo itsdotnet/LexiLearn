@@ -1,6 +1,7 @@
 ﻿using LexiLearn.Domain.Entity.User;
 using LexiLearn.Domain.Enums;
 using LexiLearn.Domain.Services;
+using LexiLearn.Service.DTOs.Quizzes.QuizHistory;
 using LexiLearn.Service.Interfaces;
 using LexiLearn.Service.Services;
 
@@ -115,6 +116,11 @@ public class MainUserUI
 
     public async Task StartQuizAsync()
     {
+        Console.WriteLine("This function is not available yet!");
+        return;
+        
+        //will continu
+
         var response = await quizService.GetAllAsync();
 
         if (response.StatusCode != 200)
@@ -144,8 +150,13 @@ public class MainUserUI
             Console.WriteLine("Entered invalid id.");
             return;
         }
-
         var allQuestion = (await questionService.GetQuestionsByQuizIdAsync(quizId)).Data;
+        if (allQuestion.Count() == 0)
+        {
+            Console.Clear();
+            Console.WriteLine("Quiz is empty.");
+            return;
+        }
         double scorePresent = 100 / allQuestion.Count();
         double scoreSum = 0;
 
@@ -170,6 +181,12 @@ public class MainUserUI
         int lastResult = scoreSum > 99 ? 100 : Convert.ToInt32(scoreSum);
 
         Console.WriteLine($"You finishid Quiz and earned {scoreSum} score");
+        
         await userService.UpdateScoreAsync(currentUser.Id, lastResult);
+        await quizHistoryService.CreateAsync(new QuizHistoryCreationDto
+        {
+            UserId = currentUser.Id,
+            QuizId = quizId
+        });
     }
 }

@@ -50,7 +50,7 @@ public class ProfileControl
         return isRunning;
     }
 
-    private async Task UpdatePasswordAsync()
+    private async Task<string> UpdatePasswordAsync()
     {
         Console.Clear();
 
@@ -65,11 +65,13 @@ public class ProfileControl
         if (response.StatusCode == 200)
         {
             Console.WriteLine("Password updated successfully!");
+            return newPassword;
         }
         else
         {
             Console.WriteLine($"Error updating Password: {response.Message}");
         }
+        return "";
     }
 
 
@@ -87,11 +89,22 @@ public class ProfileControl
         Console.Write("Enter new lastname: ");
         var newLastname = Console.ReadLine();
 
-        Console.Write("Enter new username: ");
+        Console.Write("Enter new username(min 3,max 25): ");
         var newUsername = Console.ReadLine();
 
-        Console.Write("Enter new password: ");
-        var newPassword = Console.ReadLine();
+        while ((await userService.IsExsistUsernameAsync(newUsername)).Data)
+        {
+            Console.Write("\nThis username already taken.\nEnter new username: ");
+            newUsername = Console.ReadLine();
+        }
+
+        if (newUsername.Length < 4 || newUsername.Length > 25)
+        {
+            Console.WriteLine("Registering failed. Please be carefull to length of username.");
+            return;
+        }
+
+        var task = await UpdatePasswordAsync();
 
         var updateUserDto = new UserUpdateDto
         {
@@ -99,7 +112,7 @@ public class ProfileControl
             FirstName = newFirstname,
             LastName = newLastname,
             UserName = newUsername,
-            Password = newPassword
+            Password = task == "" ? currentUser.Password : task
         };
 
         var response = await userService.UpdateAsync(updateUserDto);
