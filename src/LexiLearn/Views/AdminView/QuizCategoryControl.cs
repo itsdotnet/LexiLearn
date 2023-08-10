@@ -12,7 +12,7 @@ public class QuizCategoryControl
         this.quizCategoryService = new QuizCategoryService();
     }
 
-    public async Task StartQuizCategoryControl()
+    public async Task StartAsync()
     {
         bool isRunning = true;
 

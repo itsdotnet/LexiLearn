@@ -12,7 +12,7 @@ public class WordCategoryControl
         this.wordCategoryService = new WordCategoryService();
     }
 
-    public async Task StartWordCategoryControl()
+    public async Task StartAsync()
     {
         bool isRunning = true;
 

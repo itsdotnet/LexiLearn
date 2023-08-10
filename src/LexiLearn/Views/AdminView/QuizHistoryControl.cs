@@ -14,7 +14,7 @@ public class QuizHistoryControl
         this.quizHistoryService = new QuizHistoryService();
     }
 
-    public async Task StartQuizHistoryControl()
+    public async Task StartAsync()
     {
         bool isRunning = true;
 

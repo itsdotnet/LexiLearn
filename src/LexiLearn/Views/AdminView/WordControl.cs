@@ -13,7 +13,7 @@ public class WordControl
         wordService = new WordService();
     }
 
-    public async Task Start()
+    public async Task StartAsync()
     {
         Console.WriteLine("Welcome to Word Management Console");
 

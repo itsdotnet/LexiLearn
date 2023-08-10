@@ -13,7 +13,7 @@ public class QuestionControl
         questionService = new QuestionService();
     }
 
-    public async Task Start()
+    public async Task StartAsync()
     {
         Console.WriteLine("Welcome to Question Management Console");
 

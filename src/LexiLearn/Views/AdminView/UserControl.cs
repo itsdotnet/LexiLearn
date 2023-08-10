@@ -13,7 +13,7 @@ public class UserControl
         userService = new UserService();
     }
 
-    public async Task Start()
+    public async Task StartAsync()
     {
         Console.WriteLine("Welcome to User Management Console");
 

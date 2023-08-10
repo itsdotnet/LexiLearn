@@ -14,7 +14,7 @@ public class QuizControl
         quizService = new QuizService();
     }
 
-    public async Task Start()
+    public async Task StartAsync()
     {
         Console.WriteLine("Welcome to Quiz Management Console");
 
