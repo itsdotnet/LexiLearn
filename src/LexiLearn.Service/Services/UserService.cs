@@ -302,7 +302,7 @@ public class UserService : IUserService
             {
                 StatusCode = 404,
                 Message = "User not found",
-                Data = true
+                Data = false
             };
 
         return new Response<bool>

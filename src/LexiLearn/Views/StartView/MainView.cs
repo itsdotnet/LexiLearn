@@ -95,6 +95,8 @@ public class MainView
 
     private async Task RegisterAsync()
     {
+        Console.Clear();
+
         Console.Write("Enter firstname: ");
         var firstname = Console.ReadLine();
 
@@ -131,7 +133,11 @@ public class MainView
 
         if (code == 0)
         {
-            Console.WriteLine("Verifing email is failed!");
+            Console.WriteLine("Email verified!");
+        }
+        else
+        {
+            Console.WriteLine("Email verifing failed!");
             return;
         }
 
