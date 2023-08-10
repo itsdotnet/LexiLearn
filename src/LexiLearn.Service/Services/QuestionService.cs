@@ -2,7 +2,6 @@
 using LexiLearn.DAL.IRepositories;
 using LexiLearn.DAL.Repository;
 using LexiLearn.Domain.Entities.Questions;
-using LexiLearn.Domain.Entities.Words;
 using LexiLearn.Domain.Enums;
 using LexiLearn.Service.DTOs.Questions;
 using LexiLearn.Service.Helpers;
@@ -230,7 +229,7 @@ public class QuestionService : IQuestionService
         var question = unitOfWork.QuestionRepository.SelectAll().Include(q => q.Word)
             .FirstOrDefault(q => q.Id == id);
 
-        if(question is null)
+        if (question is null)
             return new Response<bool>
             {
                 StatusCode = 404,
@@ -238,14 +237,14 @@ public class QuestionService : IQuestionService
                 Data = false
             };
 
-        if(answer.Trim().ToLower() == question.Word.Translation)
+        if (answer.Trim().ToLower() == question.Word.Translation)
             return new Response<bool>
             {
                 StatusCode = 200,
                 Message = "Answer is true",
                 Data = true
             };
-        
+
         return new Response<bool>
         {
             StatusCode = 400,
