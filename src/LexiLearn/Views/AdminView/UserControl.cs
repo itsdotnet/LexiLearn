@@ -45,7 +45,7 @@ public class UserControl
                     await ViewAllUsers();
                     break;
                 case "5":
-                    await ViewAllUsers();
+                    await ViewUserById();
                     break;
                 case "6":
                     return;
