@@ -210,18 +210,19 @@ public class QuestionService : IQuestionService
         return word != null;
     }
 
-    public async Task PrintQuestionAsync(long id)
+    public async Task<string> PrintQuestionAsync(long id)
     {
         var question = unitOfWork.QuestionRepository.SelectAll().Include(q => q.Word)
             .FirstOrDefault(q => q.Id == id);
 
         if (question is null)
-            return;
+            return "";
 
         if (question.Type == QuestionType.EngToUzb)
             Console.Write($"Translate {question.Word.Text} to Uzbek language: ");
         else
             Console.Write($"{question.Word.Text} so'zini ingliz tiliga tarjima qiling: ");
+        return question.Word.Translation;
     }
 
     public async Task<Response<bool>> CheckAsync(long id, string answer)

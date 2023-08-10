@@ -1,10 +1,14 @@
-﻿namespace LexiLearn
+﻿using LexiLearn.Views.StartView;
+
+namespace LexiLearn
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hi, Hitler!");
+            Console.ForegroundColor = ConsoleColor.Green;
+            MainView mainView = new MainView();
+            await mainView.StartAsync();
         }
     }
 }

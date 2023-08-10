@@ -338,4 +338,16 @@ public class UserService : IUserService
             Data = mapper.Map<UserResultDto>(exsistUser)
         };
     }
+
+    public async Task UpdateScoreAsync(long id, int score)
+    {
+        var exsistUser = unitOfWork.UserRepository.Select(id);
+
+        if (exsistUser is null)
+            return;
+
+        exsistUser.Score += score;
+        unitOfWork.UserRepository.Update(exsistUser);
+        unitOfWork.UserRepository.SaveChanges();
+    }
 }

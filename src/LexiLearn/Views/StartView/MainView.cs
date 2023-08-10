@@ -26,7 +26,7 @@ public class MainView
     {
         while (true)
         {
-            Console.WriteLine("[1] - Login\n[2] - Register\n");
+            Console.WriteLine("[1] - Login\n[2] - Register\n[3] - Exit\n");
 
             var choice = Console.ReadLine();
 
@@ -38,6 +38,8 @@ public class MainView
                 case "2":
                     await RegisterAsync();
                     break;
+                case "3":
+                    return;
                 default:
                     Console.WriteLine("Invalid option please try again.");
                     break;
@@ -67,7 +69,7 @@ public class MainView
                 {
                     var user = (await userService.GetByEmailAsync(login)).Data;
                     MainUserUI mainUserUI = new MainUserUI(user);
-                    //start
+                    await mainUserUI.StartAsync();
                 }
                 else
                 {
@@ -81,7 +83,7 @@ public class MainView
                 {
                     var user = (await userService.GetByUsernameAsync(login)).Data;
                     MainUserUI mainUserUI = new MainUserUI(user);
-                    //start
+                    await mainUserUI.StartAsync();
                 }
                 else
                 {
@@ -161,7 +163,7 @@ public class MainView
             Console.WriteLine("\nAccount created successfully!\n");
             var newUser = (await userService.GetByIdAsync(response.Data.Id)).Data;
             MainUserUI mainUserUI = new MainUserUI(newUser);
-
+            await mainUserUI.StartAsync();
         }
         else
         {

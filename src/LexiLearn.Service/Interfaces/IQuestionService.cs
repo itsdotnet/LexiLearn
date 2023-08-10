@@ -10,7 +10,7 @@ public interface IQuestionService
 
     Task<Response<QuestionResultDto>> UpdateAsync(QuestionUpdateDto dto);
 
-    Task PrintQuestionAsync(long id);
+    Task<string> PrintQuestionAsync(long id);
 
     Task<Response<bool>> DeleteAsync(long id);
 
