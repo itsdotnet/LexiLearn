@@ -26,7 +26,7 @@ public class WordService : IWordService
 
     public async Task<Response<WordResultDto>> CreateAsync(WordCreationDto dto)
     {
-        if ((await IsValidCategoryId(dto.CategoryId)).Data)
+        if (!(await IsValidCategoryId(dto.CategoryId)).Data)
             return new Response<WordResultDto>()
             {
                 StatusCode = 400,

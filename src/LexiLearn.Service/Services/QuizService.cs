@@ -26,7 +26,7 @@ public class QuizService : IQuizService
 
     public async Task<Response<QuizResultDto>> CreateAsync(QuizCreationDto dto)
     {
-        if((await IsValidCategoryId(dto.CategoryId)).Data)
+        if(!(await IsValidCategoryId(dto.CategoryId)).Data)
             return new Response<QuizResultDto>()
             {
                 StatusCode = 400,
