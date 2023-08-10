@@ -206,7 +206,7 @@ public class WordService : IWordService
 
     public async Task<Response<bool>> IsValidCategoryId(long categoryId)
     {
-        var category = unitOfWork.QuizCategoryRepository.Select(categoryId);
+        var category = unitOfWork.WordCategoryRepository.Select(categoryId);
 
         if (category is null)
             return new Response<bool>
