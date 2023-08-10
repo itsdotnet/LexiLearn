@@ -74,7 +74,7 @@ public class WordControl
         Console.Write("Enter word pronunciation: ");
         var pronunciation = Console.ReadLine();
 
-        Console.Write("Enter language (English/French/German, etc.): ");
+        Console.Write("Enter language (English/Uzbek): ");
         var languageStr = Console.ReadLine();
         Enum.TryParse<Language>(languageStr, out var language);
 

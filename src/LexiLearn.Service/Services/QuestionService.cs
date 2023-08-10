@@ -160,7 +160,7 @@ public class QuestionService : IQuestionService
     public async Task<Response<IEnumerable<Question>>> GetQuestionsByWordAsync(long wordId)
     {
         var questionsForWord = unitOfWork.QuestionRepository.SelectAll()
-            .Where(q => q.WordId == wordId);
+            .Where(q => q.WordId == wordId).Include(w => w.Word);
 
         if (questionsForWord is null)
         {
@@ -183,7 +183,7 @@ public class QuestionService : IQuestionService
     public async Task<Response<IEnumerable<Question>>> GetQuestionsByTypeAsync(QuestionType type)
     {
         var questionsByType = unitOfWork.QuestionRepository.SelectAll()
-            .Where(q => q.Type == type);
+            .Where(q => q.Type == type).Include(q => q.Word);
 
         if (questionsByType is null)
         {
