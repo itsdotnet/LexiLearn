@@ -9,7 +9,7 @@ using LexiLearn.Service.Mappers;
 
 namespace LexiLearn.Service.Services;
 
-public class QuizCategoryService : IWordCategoryService
+public class QuizCategoryService : IQuizCategoryService
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly IMapper mapper;
