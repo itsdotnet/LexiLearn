@@ -53,7 +53,9 @@ public class MainUserUI
                     await StartQuizAsync();
                     break;
                 case "4":
-                    await profile.StartAsync();
+                    var response = await profile.StartAsync();
+                    if(!response)
+                        return;
                     break;
                 case "5":
                     isRunning = false;

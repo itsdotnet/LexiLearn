@@ -97,10 +97,10 @@ public class MainView
     {
         Console.Clear();
 
-        Console.Write("Enter firstname: ");
+        Console.Write("Enter firstname(min 2,max 25): ");
         var firstname = Console.ReadLine();
 
-        Console.Write("Enter lastname: ");
+        Console.Write("Enter lastname(min 2,max 25): ");
         var lastname = Console.ReadLine();
 
         Console.Write("Enter email: ");
@@ -141,7 +141,7 @@ public class MainView
             return;
         }
 
-        Console.Write("Enter new username: ");
+        Console.Write("Enter new username(min 3,max 25): ");
         var username = Console.ReadLine();
 
         while ((await userService.IsExsistUsernameAsync(username)).Data)
@@ -149,8 +149,15 @@ public class MainView
             Console.Write("\nThis username already taken.\nEnter new username: ");
             username = Console.ReadLine();
         }
-
-        Console.Write("Enter new password: ");
+        bool check = firstname.Length < 3 || firstname.Length > 25 ||
+           lastname.Length < 3 || lastname.Length > 25 ||
+           username.Length < 4 || username.Length > 25;
+        if (check)
+        {
+            Console.WriteLine("Registering failed. Please be carefull to length of username.");
+            return;
+        }
+            Console.Write("Enter new password: ");
         var password = Console.ReadLine();
 
         var newUserDto = new UserCreationDto
@@ -167,7 +174,8 @@ public class MainView
         if (response.StatusCode == 200)
         {
             Console.WriteLine("\nAccount created successfully!\n");
-            var newUser = (await userService.GetByIdAsync(response.Data.Id)).Data;
+            var response2 = await userService.GetByEmailAsync(response.Data.Email);
+            var newUser = response2.Data;
 
             MainUserUI mainUserUI = new MainUserUI(newUser);
             await mainUserUI.StartAsync();

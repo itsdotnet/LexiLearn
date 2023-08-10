@@ -17,7 +17,7 @@ public class ProfileControl
         this.currentUser = currentUser;
     }
 
-    public async Task StartAsync()
+    public async Task<bool> StartAsync()
     {
         while (isRunning)
         {
@@ -39,15 +39,15 @@ public class ProfileControl
                     break;
                 case "3":
                     await DeleteAccount();
-                    break;
+                    return false;
                 case "4":
-                    isRunning = false;
-                    break;
+                    return true;
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
                     break;
             }
         }
+        return isRunning;
     }
 
     private async Task UpdatePasswordAsync()
@@ -134,8 +134,6 @@ public class ProfileControl
         {
             Console.WriteLine($"Error deleting Account: {response.Message}");
         }
-        MainView mainView = new MainView();
-        await mainView.StartAsync();
         isRunning = false;
     }
 }
