@@ -80,8 +80,79 @@ public class UserService : IUserService
         };
     }
 
+    public async Task<Response<bool>> CheckPasswordByEmail(string email, string password)
+    {
+        var user = unitOfWork.UserRepository.SelectAll()
+            .Where(u => u.Email.ToLower() == email.ToLower())
+                .FirstOrDefault();
+
+        if (user is null)
+            return new Response<bool>
+            {
+                StatusCode = 404,
+                Message = "User not found",
+                Data = false
+            };
+
+        password = password.Hasher();
+
+        if (user.Password == password)
+            return new Response<bool>
+            {
+                StatusCode = 200,
+                Message = "Password is true",
+                Data = true
+            };
+
+        return new Response<bool>
+        {
+            StatusCode = 401,
+            Message = "Password is wrong",
+            Data = false
+        };
+    }
+
+    public async Task<Response<bool>> CheckPasswordByUsername(string username, string password)
+    {
+        var user = unitOfWork.UserRepository.SelectAll()
+            .FirstOrDefault(u => u.UserName.ToLower() == username.ToLower());
+
+        if (user is null)
+            return new Response<bool>
+            {
+                StatusCode = 404,
+                Message = "User not found",
+                Data = false
+            };
+
+        password = password.Hasher();
+
+        if (user.Password == password)
+            return new Response<bool>
+            {
+                StatusCode = 200,
+                Message = "Password is true",
+                Data = true
+            };
+
+        return new Response<bool>
+        {
+            StatusCode = 401,
+            Message = "Password is wrong",
+            Data = false
+        };
+    }
+
     public async Task<Response<UserResultDto>> CreateAsync(UserCreationDto dto)
     {
+        if (dto.UserName.Contains("@"))
+            return new Response<UserResultDto>
+            {
+                StatusCode = 400,
+                Message = "Username cannot contains `@`",
+                Data = mapper.Map<UserResultDto>(dto)
+            };
+
         dto.Password = dto.Password.Hasher();
 
         unitOfWork.UserRepository.Add(mapper.Map<User>(dto));
@@ -138,6 +209,27 @@ public class UserService : IUserService
         };
     }
 
+    public async Task<Response<User>> GetByEmailAsync(string email)
+    {
+        var user = unitOfWork.UserRepository.SelectAll()
+            .FirstOrDefault(u => u.Email == email);
+
+        if (user is null)
+            return new Response<User>
+            {
+                StatusCode = 404,
+                Message = "User not found",
+                Data = null
+            };
+
+        return new Response<User>
+        {
+            StatusCode = 200,
+            Message = "User returned",
+            Data = user
+        };
+    }
+
     public async Task<Response<User>> GetByIdAsync(long id)
     {
         var user = unitOfWork.UserRepository.Select(id);
@@ -158,7 +250,28 @@ public class UserService : IUserService
         };
     }
 
-    public async Task<Response<bool>> IsExsistEmail(string email)
+    public async Task<Response<User>> GetByUsernameAsync(string username)
+    {
+        var user = unitOfWork.UserRepository.SelectAll()
+            .FirstOrDefault(u => u.UserName == username);
+
+        if (user is null)
+            return new Response<User>
+            {
+                StatusCode = 404,
+                Message = "User not found",
+                Data = null
+            };
+
+        return new Response<User>
+        {
+            StatusCode = 200,
+            Message = "User returned",
+            Data = user
+        };
+    }
+
+    public async Task<Response<bool>> IsExsistEmailAsync(string email)
     {
         var allUsers = unitOfWork.UserRepository.SelectAll();
         var exsistUser = allUsers.FirstOrDefault(x => x.Email == email);
@@ -179,7 +292,7 @@ public class UserService : IUserService
         };
     }
 
-    public async Task<Response<bool>> IsExsistUsername(string username)
+    public async Task<Response<bool>> IsExsistUsernameAsync(string username)
     {
         var allUsers = unitOfWork.UserRepository.SelectAll();
         var exsistUser = allUsers.FirstOrDefault(x => x.UserName == username);

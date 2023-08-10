@@ -25,7 +25,7 @@ public class MainAdminView
         quizControl = new QuizControl();
     }
 
-    public async Task Start()
+    public async Task StartAsync()
     {
         bool isRunning = true;
 

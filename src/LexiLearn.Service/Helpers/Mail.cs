@@ -27,7 +27,7 @@ public class Mail
         }
     }
 
-    public int Verfy(string emailAdress)
+    public int Verify(string emailAdress)
     {
         MimeMessage mail = new MimeMessage();
 

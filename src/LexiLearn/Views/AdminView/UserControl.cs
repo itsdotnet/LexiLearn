@@ -58,6 +58,12 @@ public class UserControl
 
     private async Task CreateUser()
     {
+        Console.Write("Enter firstname: ");
+        var firstname = Console.ReadLine();
+
+        Console.Write("Enter lastname: ");
+        var lastname = Console.ReadLine();
+
         Console.Write("Enter username: ");
         var username = Console.ReadLine();
 
@@ -69,6 +75,8 @@ public class UserControl
 
         var newUserDto = new UserCreationDto
         {
+            FirstName = firstname,
+            LastName = lastname,
             UserName = username,
             Email = email,
             Password = password

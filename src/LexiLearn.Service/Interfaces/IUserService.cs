@@ -10,16 +10,24 @@ namespace LexiLearn.Domain.Services
 
         Task<Response<UserResultDto>> UpdateAsync(UserUpdateDto dto);
 
-        Task<Response<bool>> IsExsistUsername(string username);
+        Task<Response<bool>> IsExsistUsernameAsync(string username);
 
-        Task<Response<bool>> IsExsistEmail(string email);
+        Task<Response<bool>> IsExsistEmailAsync(string email);
 
         Task<Response<bool>> CheckPassword(long id, string password);
+
+        Task<Response<bool>> CheckPasswordByUsername(string username, string password);
+        
+        Task<Response<bool>> CheckPasswordByEmail(string email, string password);
 
         Task<Response<bool>> ChangePassword(long id, string  oldPass, string newPass);
 
         Task<Response<bool>> DeleteAsync(long id);
 
+        Task<Response<User>> GetByEmailAsync(string email);
+
+        Task<Response<User>> GetByUsernameAsync(string username);
+        
         Task<Response<User>> GetByIdAsync(long id);
 
         Task<Response<IEnumerable<User>>> GetAllAsync();
