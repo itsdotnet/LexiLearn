@@ -73,7 +73,7 @@ public class MainView
                 }
                 else
                 {
-                    Console.WriteLine("Error on login :" + response.Message);
+                    Console.WriteLine("Error on login: " + response.Message);
                 }
             }
             else
@@ -87,7 +87,7 @@ public class MainView
                 }
                 else
                 {
-                    Console.WriteLine("Error on login :" + response.Message);
+                    Console.WriteLine("Error on login : " + response.Message);
                 }
             }
         }
@@ -168,6 +168,7 @@ public class MainView
         {
             Console.WriteLine("\nAccount created successfully!\n");
             var newUser = (await userService.GetByIdAsync(response.Data.Id)).Data;
+
             MainUserUI mainUserUI = new MainUserUI(newUser);
             await mainUserUI.StartAsync();
         }

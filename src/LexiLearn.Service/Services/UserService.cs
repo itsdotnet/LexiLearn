@@ -62,7 +62,7 @@ public class UserService : IUserService
                 Data = false
             };
 
-        password = password.Hasher();
+        password.Hasher();
 
         if (user.Password == password)
             return new Response<bool>
@@ -94,7 +94,7 @@ public class UserService : IUserService
                 Data = false
             };
 
-        password = password.Hasher();
+        password.Hasher();
 
         if (user.Password == password)
             return new Response<bool>
@@ -125,7 +125,7 @@ public class UserService : IUserService
                 Data = false
             };
 
-        password = password.Hasher();
+        password.Hasher();
 
         if (user.Password == password)
             return new Response<bool>
@@ -153,7 +153,7 @@ public class UserService : IUserService
                 Data = mapper.Map<UserResultDto>(dto)
             };
 
-        dto.Password = dto.Password.Hasher();
+        dto.Password.Hasher();
 
         unitOfWork.UserRepository.Add(mapper.Map<User>(dto));
         unitOfWork.UserRepository.SaveChanges();
@@ -325,7 +325,7 @@ public class UserService : IUserService
                 Data = null
             };
 
-        dto.Password = dto.Password.Hasher();
+        dto.Password.Hasher();
 
         mapper.Map(dto, exsistUser);
         unitOfWork.UserRepository.Update(exsistUser);

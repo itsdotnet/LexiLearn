@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using LexiLearn.Domain.Entity.User;
+﻿using LexiLearn.Domain.Entity.User;
 using LexiLearn.Domain.Services;
 using LexiLearn.Service.DTOs.Users;
 using LexiLearn.Service.Services;
@@ -11,7 +10,7 @@ public class ProfileControl
 {
     private IUserService userService;
     private User currentUser;
-
+    private bool isRunning = true;
     public ProfileControl(User currentUser)
     {
         this.userService = new UserService();
@@ -20,7 +19,6 @@ public class ProfileControl
 
     public async Task StartAsync()
     {
-        bool isRunning = true;
         while (isRunning)
         {
             Console.WriteLine("Welcome to LexiLearn");
@@ -78,7 +76,7 @@ public class ProfileControl
     private async Task UpdateAllAsync()
     {
         Console.Clear();
-     
+
         var userId = currentUser.Id;
 
         var userResponse = await userService.GetByIdAsync(userId);
@@ -138,5 +136,6 @@ public class ProfileControl
         }
         MainView mainView = new MainView();
         await mainView.StartAsync();
+        isRunning = false;
     }
 }

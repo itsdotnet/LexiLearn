@@ -15,6 +15,7 @@ public class MainUserUI
     private IWordService wordService;
     private ProfileControl profile;
     private User currentUser;
+    public bool isRunning = true;
 
     public MainUserUI(User user)
     {
@@ -29,7 +30,6 @@ public class MainUserUI
 
     public async Task StartAsync()
     {
-        bool isRunning = true;
         while (isRunning)
         {
             Console.WriteLine("Welcome to LexiLearn");
