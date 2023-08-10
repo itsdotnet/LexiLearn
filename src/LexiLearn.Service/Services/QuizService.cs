@@ -71,8 +71,7 @@ public class QuizService : IQuizService
             };
         }
 
-        existingQuiz = mapper.Map<Quiz>(dto);
-
+        mapper.Map(dto, existingQuiz);
         unitOfWork.QuizRepository.Update(existingQuiz);
         unitOfWork.QuizRepository.SaveChanges();
 

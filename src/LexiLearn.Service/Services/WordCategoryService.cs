@@ -52,7 +52,7 @@ namespace LexiLearn.Service.Services
                 };
             }
 
-            existingCategory = mapper.Map<WordCategory>(dto);
+            mapper.Map(dto, existingCategory);
             unitOfWork.WordCategoryRepository.Update(existingCategory);
             unitOfWork.WordCategoryRepository.SaveChanges();
 

@@ -75,7 +75,7 @@ public class QuestionService : IQuestionService
             };
         }
 
-        existingQuestion = mapper.Map<Question>(dto);
+        mapper.Map(dto, existingQuestion);
         unitOfWork.QuestionRepository.Update(existingQuestion);
         unitOfWork.QuestionRepository.SaveChanges();
 

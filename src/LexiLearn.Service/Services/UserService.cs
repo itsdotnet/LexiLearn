@@ -213,8 +213,8 @@ public class UserService : IUserService
             };
 
         dto.Password = dto.Password.Hasher();
-        exsistUser = mapper.Map<User>(dto);
 
+        mapper.Map(dto, exsistUser);
         unitOfWork.UserRepository.Update(exsistUser);
         unitOfWork.UserRepository.SaveChanges();
 

@@ -72,8 +72,8 @@ public class WordService : IWordService
             };
         }
 
-        existingWord = mapper.Map<Word>(dto);
 
+        mapper.Map(dto, existingWord);
         unitOfWork.WordRepository.Update(existingWord);
         unitOfWork.WordRepository.SaveChanges();
 

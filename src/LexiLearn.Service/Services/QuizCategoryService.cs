@@ -52,7 +52,7 @@ public class QuizCategoryService : IQuizCategoryService
             };
         }
 
-        existingCategory = mapper.Map<QuizCategory>(dto);
+        mapper.Map(dto, existingCategory);
         unitOfWork.QuizCategoryRepository.Update(existingCategory);
         unitOfWork.QuizCategoryRepository.SaveChanges();
 
