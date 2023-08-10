@@ -25,7 +25,7 @@ LexiLearn is a language learning application designed to help you expand your vo
 
 ## Database 
 
-![LexiLearnDatabase](https://github.com/IskandarKodirov/LexiLearn/assets/116558882/35ef0462-5437-4e3c-b84b-3d174f6bdfbe)
+![LexiLearnDb](https://github.com/IskandarKodirov/LexiLearn/assets/116558882/60061b56-6d07-4fed-8174-f17484d58c6d)
 
 ## Contributions
 
