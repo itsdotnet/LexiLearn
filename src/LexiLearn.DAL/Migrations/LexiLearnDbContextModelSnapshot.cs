@@ -83,6 +83,9 @@ namespace LexiLearn.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<long>("QuizId")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
@@ -93,6 +96,8 @@ namespace LexiLearn.DAL.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("QuizId");
 
                     b.HasIndex("WordId");
 
@@ -251,11 +256,19 @@ namespace LexiLearn.DAL.Migrations
 
             modelBuilder.Entity("LexiLearn.Domain.Entities.Questions.Question", b =>
                 {
+                    b.HasOne("LexiLearn.Domain.Entities.Quizzes.Quiz", "Quiz")
+                        .WithMany()
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LexiLearn.Domain.Entities.Words.Word", "Word")
                         .WithMany()
                         .HasForeignKey("WordId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Quiz");
 
                     b.Navigation("Word");
                 });

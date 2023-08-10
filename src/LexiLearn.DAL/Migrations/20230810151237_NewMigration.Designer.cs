@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LexiLearn.DAL.Migrations
 {
     [DbContext(typeof(LexiLearnDbContext))]
-    [Migration("20230809181907_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230810151237_NewMigration")]
+    partial class NewMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,6 +86,9 @@ namespace LexiLearn.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<long>("QuizId")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
@@ -96,6 +99,8 @@ namespace LexiLearn.DAL.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("QuizId");
 
                     b.HasIndex("WordId");
 
@@ -254,11 +259,19 @@ namespace LexiLearn.DAL.Migrations
 
             modelBuilder.Entity("LexiLearn.Domain.Entities.Questions.Question", b =>
                 {
+                    b.HasOne("LexiLearn.Domain.Entities.Quizzes.Quiz", "Quiz")
+                        .WithMany()
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LexiLearn.Domain.Entities.Words.Word", "Word")
                         .WithMany()
                         .HasForeignKey("WordId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Quiz");
 
                     b.Navigation("Word");
                 });

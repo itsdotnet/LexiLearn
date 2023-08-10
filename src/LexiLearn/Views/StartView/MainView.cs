@@ -14,14 +14,36 @@ public class MainView
     private IUserService userService;
     private Mail mail;
 
-    public MainView() 
+    public MainView()
     {
         this.userService = new UserService();
         this.localLogin = "admin";
         this.localPassword = "admin";
         mail = new Mail();
     }
-    
+
+    public async Task StartAsync()
+    {
+        while (true)
+        {
+            Console.WriteLine("[1] - Login\n[2] - Register\n");
+
+            var choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    await LoginAsync();
+                    break;
+                case "2":
+                    await RegisterAsync();
+                    break;
+                default:
+                    Console.WriteLine("Invalid option please try again.");
+                    break;
+            }
+        }
+    }
 
     private async Task LoginAsync()
     {
@@ -31,7 +53,7 @@ public class MainView
         Console.Write("Enter Password: ");
         string password = Console.ReadLine();
 
-        if(password == localPassword && localLogin == login)
+        if (password == localPassword && localLogin == login)
         {
             MainAdminView mainAdminView = new MainAdminView();
             await mainAdminView.StartAsync();
@@ -86,13 +108,32 @@ public class MainView
             email = Console.ReadLine();
         }
 
-        var code = mail.Verify
+        var code = mail.Verify(email);
 
         Console.Write("Verify your email(enter code on your email): ");
         var verifyCode = int.Parse(Console.ReadLine());
 
+        for (int i = 0; i < 3; i++)
+        {
+            if (verifyCode == code)
+            {
+                code = 0;
+                break;
+            }
+            else
+            {
+                Console.Write("Verify code is wrong try again: ");
+                verifyCode = int.Parse(Console.ReadLine());
+            }
+        }
 
-        Console.Write("Enter username: ");
+        if (code == 0)
+        {
+            Console.WriteLine("Verifing email is failed!");
+            return;
+        }
+
+        Console.Write("Enter new username: ");
         var username = Console.ReadLine();
 
         while ((await userService.IsExsistUsernameAsync(username)).Data)
@@ -101,7 +142,7 @@ public class MainView
             username = Console.ReadLine();
         }
 
-        Console.Write("Enter password: ");
+        Console.Write("Enter new password: ");
         var password = Console.ReadLine();
 
         var newUserDto = new UserCreationDto
@@ -117,11 +158,14 @@ public class MainView
 
         if (response.StatusCode == 200)
         {
-            Console.WriteLine("Account created successfully!");
+            Console.WriteLine("\nAccount created successfully!\n");
+            var newUser = (await userService.GetByIdAsync(response.Data.Id)).Data;
+            MainUserUI mainUserUI = new MainUserUI(newUser);
+
         }
         else
         {
-            Console.WriteLine($"Error creating account: {response.Message}");
+            Console.WriteLine($"\nError creating account: {response.Message}\n");
         }
     }
 }

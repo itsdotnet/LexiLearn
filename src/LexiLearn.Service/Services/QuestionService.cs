@@ -2,6 +2,7 @@
 using LexiLearn.DAL.IRepositories;
 using LexiLearn.DAL.Repository;
 using LexiLearn.Domain.Entities.Questions;
+using LexiLearn.Domain.Entities.Words;
 using LexiLearn.Domain.Enums;
 using LexiLearn.Service.DTOs.Questions;
 using LexiLearn.Service.Helpers;
@@ -249,6 +250,29 @@ public class QuestionService : IQuestionService
             StatusCode = 400,
             Message = "Answer is wrong",
             Data = false
+        };
+    }
+
+    public async Task<Response<IEnumerable<Question>>> GetQuestionsByQuizIdAsync(long quizId)
+    {
+        var questionsForQuiz = unitOfWork.QuestionRepository.SelectAll()
+            .Where(q => q.QuizId == quizId).Include(w => w.Quiz);
+
+        if (questionsForQuiz is null)
+        {
+            return new Response<IEnumerable<Question>>
+            {
+                StatusCode = 404,
+                Message = "No questions found for the specified word",
+                Data = null
+            };
+        }
+
+        return new Response<IEnumerable<Question>>
+        {
+            StatusCode = 200,
+            Message = "Questions for the specified word returned",
+            Data = questionsForQuiz
         };
     }
 }

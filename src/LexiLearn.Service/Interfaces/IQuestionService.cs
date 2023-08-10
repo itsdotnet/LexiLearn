@@ -20,5 +20,7 @@ public interface IQuestionService
 
     Task<Response<IEnumerable<Question>>> GetQuestionsByWordAsync(long wordId);
 
+    Task<Response<IEnumerable<Question>>> GetQuestionsByQuizIdAsync(long quizId);
+
     Task<Response<bool>> CheckAsync(long id, string answer);
 }
