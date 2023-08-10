@@ -24,7 +24,7 @@ public class MainUserUI
         this.quizHistoryService = new QuizHistoryService();
         this.userService = new UserService();
         this.wordService = new WordService();
-        profile = new ProfileControl();
+        profile = new ProfileControl(currentUser);
     }
 
     public async Task StartAsync()
