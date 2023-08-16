@@ -1,5 +1,6 @@
 using LexiLearn.DAL.Constexts;
 using LexiLearn.Domain.Services;
+using LexiLearn.Service.Interfaces;
 using LexiLearn.Service.Mappers;
 using LexiLearn.Service.Services;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,12 @@ public class Program
 
         builder.Services.AddAutoMapper(typeof(MappingProfile));
         builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IQuizService, QuizService>();
+        builder.Services.AddScoped<IWordService, WordService>();
+        builder.Services.AddScoped<IQuestionService, QuestionService>();
+        builder.Services.AddScoped<IQuizHistoryService, QuizHistoryService>();
+        builder.Services.AddScoped<IQuizCategoryService, QuizCategoryService>();
+        builder.Services.AddScoped<IWordCategoryService, WordCategoryService>();
 
         var app = builder.Build();
 
