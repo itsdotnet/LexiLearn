@@ -1,7 +1,5 @@
-using LexiLearn.Domain.Entity.User;
 using LexiLearn.Service.DTOs.Users;
 using LexiLearn.Service.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LexiLearn.WebApi.Controllers
