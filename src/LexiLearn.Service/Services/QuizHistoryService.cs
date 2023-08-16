@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LexiLearn.DAL.Constexts;
 using LexiLearn.DAL.IRepositories;
 using LexiLearn.DAL.Repository;
 using LexiLearn.Domain.Entities.Quizzes;
@@ -15,9 +16,9 @@ public class QuizHistoryService : IQuizHistoryService
     private readonly IUnitOfWork unitOfWork;
     private readonly IMapper mapper;
 
-    public QuizHistoryService()
+    public QuizHistoryService(LexiLearnDbContext dbContext)
     {
-        unitOfWork = new UnitOfWork();
+        unitOfWork = new UnitOfWork(dbContext);
         mapper = new Mapper(new MapperConfiguration(cfg =>
         {
             cfg.AddProfile<MappingProfile>();

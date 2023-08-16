@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LexiLearn.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class NewMigration : Migration
+    public partial class CreateLexi : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

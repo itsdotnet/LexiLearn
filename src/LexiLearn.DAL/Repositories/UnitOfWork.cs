@@ -12,9 +12,9 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly LexiLearnDbContext dbContext;
 
-    public UnitOfWork()
+    public UnitOfWork(LexiLearnDbContext dbContext)
     {
-        this.dbContext = new LexiLearnDbContext();
+        this.dbContext = dbContext;
         UserRepository = new Repository<User>(dbContext);
         WordRepository = new Repository<Word>(dbContext);
         QuizRepository = new Repository<Quiz>(dbContext);

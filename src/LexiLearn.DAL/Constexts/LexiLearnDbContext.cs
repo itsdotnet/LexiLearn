@@ -1,5 +1,4 @@
-﻿using LexiLearn.DAL.Constans;
-using LexiLearn.Domain.Entities.Categories;
+﻿using LexiLearn.Domain.Entities.Categories;
 using LexiLearn.Domain.Entities.Questions;
 using LexiLearn.Domain.Entities.Quizzes;
 using LexiLearn.Domain.Entities.Words;
@@ -24,8 +23,6 @@ public class LexiLearnDbContext : DbContext
 
     public DbSet<WordCategory> WordCategories { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql(DbConstans.CONNECTION_STRING);
-    }
+    public LexiLearnDbContext(DbContextOptions<LexiLearnDbContext> options) : base(options)
+    { }
 }

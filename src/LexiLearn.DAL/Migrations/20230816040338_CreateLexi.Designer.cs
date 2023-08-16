@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LexiLearn.DAL.Migrations
 {
     [DbContext(typeof(LexiLearnDbContext))]
-    [Migration("20230810151237_NewMigration")]
-    partial class NewMigration
+    [Migration("20230816040338_CreateLexi")]
+    partial class CreateLexi
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
